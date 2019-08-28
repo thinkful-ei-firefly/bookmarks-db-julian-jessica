@@ -14,7 +14,8 @@ const BookmarksService = {
 
   postNewBookmark (db, newBookmark) {
     return db.into('bookmarks')
-      .insert(newBookmark);
+      .insert(newBookmark)
+      .returning('*');
   },
 
   deleteBookmarkById (db, id) {
