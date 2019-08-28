@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 const BookmarksService = {
   getAllBookmarks (db) {
     return db.from('bookmarks')

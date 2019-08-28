@@ -1,4 +1,5 @@
 'use strict';
+const xss = require('xss');
 const express = require('express');
 
 const bookmarkRouter = express.Router();
@@ -18,7 +19,8 @@ bookmarkRouter
   .route('/:id')
   .get((req, res, next) => {
     const db = req.app.get('db');
-    const { id } = req.params;
+    let { id } = req.params;
+    id = xss(id)
     return BookmarksService.getBookmarkById(db, id)
       .then(bookmarks => res.json(bookmarks))
       .catch(next);
@@ -49,10 +51,10 @@ bookmarkRouter
     }
 
     const newBookmark = { 
-      name,
-      description,
-      url,
-      rating
+      name: xss(name),
+      description: xss(description),
+      url: xss(url),
+      rating: xss(rating)
     };
 
     return BookmarksService.postNewBookmark(db, newBookmark)
@@ -66,8 +68,8 @@ bookmarkRouter
   .route('/:id')
   .delete((req, res, next) => {
     const db = req.app.get('db');
-    const { id } = req.params;
-
+    let { id } = req.params;
+    id = xss(id);
     return BookmarksService.deleteBookmarkById(db, id)
       .then(response => res.json(response));
 

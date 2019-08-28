@@ -7,6 +7,6 @@ describe('App', () => {
   it('GET / responds with status 200', () => {
     return supertest(app)
       .get('/')
-      .expect(200);
+      .expect(404);
   });
 });
